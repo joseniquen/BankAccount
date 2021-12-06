@@ -1,7 +1,7 @@
 spring:
   application:
-    name: banckaccount-microservice
+    name: account-microservice
   cloud:
     config:
       enable: true
-      uri: http://localhost:9997
+      uri: http://config-server:9997

@@ -71,15 +71,16 @@ public class AccountController {
                     isCustomerType = true;
                 }
             }
+
             if (!isAccountType) {
                 return Mono.just(ResponseEntity.ok("El codigo de Tipo Cuenta (" + c.getAccountType() + "), no existe!"));
             }
             if (!isCustomerType) {
                 return Mono.just(ResponseEntity.ok("El codigo de Tipo Cliente (" + c.getCustomerType() + "), no existe!"));
             }
-            if (CustomerType.NATURAL_PERSON.equals(m.getCustomerType())) {
+                if (CustomerType.NATURAL_PERSON.equals(m.getCustomerType())) {
 
-                return operations.listAccountByCustomer(m.getCustomer()).filter(p -> p.getAccountType().equals(m.getAccountType())).count().flatMap(fm -> {
+                return operations.listAccountByCustomer(m.getCustomer()) .filter(p -> p.getAccountType().equals(m.getAccountType())).count().flatMap(fm -> {
                     if (fm.intValue() == 0) {
                         return operations.create(c).flatMap(rp -> {
                             return Mono.just(ResponseEntity.ok(rp));

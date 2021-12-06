@@ -14,7 +14,4 @@ public class Account {
     public String customerType;
     public String accountType;
     public String dateCreated;
-    public double commission;
-    public int movementLimit;
-    public String dateMovement;
 }
