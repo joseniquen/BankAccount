@@ -3,6 +3,8 @@ package com.banck.bankaccount.infraestructure.mockRepository;
 import com.banck.bankaccount.domain.Account;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,11 +14,13 @@ import com.banck.bankaccount.aplication.model.AccountRepository;
  *
  * @author jonavcar
  */
+@Slf4j
 @Component
 public class MockAccountRepository implements AccountRepository {
 
     @Override
     public Mono<Account> get(String credito) {
+        log.info("MockAccountRepository.get");
         Account c = new Account();
         c.setAccount("34984545");
         c.setCustomer("CTP");
@@ -25,6 +29,7 @@ public class MockAccountRepository implements AccountRepository {
 
     @Override
     public Flux<Account> listAll() {
+        log.info("MockAccountRepository.listAll");
         List<Account> lc = new ArrayList<>();
         Account c = new Account();
         c.setAccount("34984545");

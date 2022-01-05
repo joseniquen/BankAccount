@@ -2,6 +2,7 @@ package com.banck.bankaccount.infraestructure.rest;
 
 import com.banck.bankaccount.domain.Account;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import org.springframework.http.ResponseEntity;
  *
  * @author jonavcar
  */
+@Slf4j
 @RestController
 @RequestMapping("/account")
 @RequiredArgsConstructor
@@ -40,21 +42,25 @@ public class AccountController {
 
     @GetMapping
     public Flux<Account> listAll() {
+        log.info("AccountController.listAll");
         return operations.list();
     }
 
     @GetMapping("/{account}")
     public Mono<Account> get(@PathVariable("account") String account) {
+        log.info("AccountController.get");
         return operations.get(account);
     }
 
     @GetMapping("/{customer}/list")
     public Flux<Account> listAccountByCustomer(@PathVariable("customer") String customer) {
+        log.info("AccountController.listAccountByCustomer");
         return operations.listAccountByCustomer(customer);
     }
 
     @PostMapping
     public Mono<ResponseEntity> create(@RequestBody Account c) {
+        log.info("AccountController.create");
         c.setAccount(c.getCustomer() + "-" + getRandomNumberString());
         c.setDateCreated(dateTime.format(formatter));
         return Mono.just(c).flatMap(m -> {
@@ -104,15 +110,18 @@ public class AccountController {
 
     @PutMapping("/{account}")
     public Mono<Account> update(@PathVariable("account") String account, @RequestBody Account c) {
+        log.info("AccountController.update");
         return operations.update(account, c);
     }
 
     @DeleteMapping("/{account}")
     public void delete(@PathVariable("account") String account) {
+        log.info("AccountController.delete");
         operations.delete(account);
     }
 
     public static String getRandomNumberString() {
+        log.info("AccountController.getRandomNumberString");
         Random rnd = new Random();
         int number = rnd.nextInt(9999);
         return String.format("%04d", number);
